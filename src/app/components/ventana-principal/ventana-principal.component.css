@@ -1,0 +1,21 @@
+.main_div {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 10% 1fr 5%;
+    margin: 0 15px;
+}
+
+.div_Agregar {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    display: grid;
+    place-content: center;
+}
+
+.lista_div {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: grid;
+    place-content: center;
+}

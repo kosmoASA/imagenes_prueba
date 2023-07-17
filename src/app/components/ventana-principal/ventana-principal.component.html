@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Lista de Imagenes</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="main_div">
+    <div class="div_Agregar">
+        <button mat-fab extended color="primary" (click)="onAddImage()">
+            <mat-icon>add</mat-icon>
+            Añadir imagen
+          </button>
+    </div>
+    <div class="lista_div">
+      <app-lista-imagenes style="width: 100%;"></app-lista-imagenes>
+    </div>
+
+</div>
