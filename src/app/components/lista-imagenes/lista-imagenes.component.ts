@@ -1,22 +1,14 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DataTable } from 'src/app/interfaces/data-table';
+import { getListService } from 'src/app/services/get-list.service';
 
 
 
 const ELEMENT_DATA: DataTable[] = [
-  {fecha: '1/06/2023', descripcion: 'Hydrogen_image.png'},
-  {fecha: '2/06/2023', descripcion: 'Helium_image.png'},
-  {fecha: '3/06/2023', descripcion: 'Lithium_image.png'},
-  {fecha: '4/06/2023', descripcion: 'Beryllium_image.png'},
-  {fecha: '5/06/2023', descripcion: 'Boron_image.png'},
-  {fecha: '6/06/2023', descripcion: 'Carbon_image.png'},
-  {fecha: '7/06/2023', descripcion: 'Nitrogen_image.png'},
-  {fecha: '8/06/2023', descripcion: 'Oxygen_image.png'},
-  {fecha: '9/06/2023', descripcion: 'Fluorine_image.png'},
-  {fecha: '10/06/2023', descripcion: 'Neon_image.png'},
+  {FECHA: new Date(), ENLACE: 'Hydrogen_image.png'}
 ];
 
 @Component({
@@ -29,20 +21,28 @@ const ELEMENT_DATA: DataTable[] = [
 export class ListaImagenesComponent {
 
   //* Variables
+  dataList: DataTable[] = [];
   
-  displayedColumns: string[] = ['fecha', 'descripcion', 'descargar', 'eliminar'];
+  displayedColumns: string[] = ['FECHA', 'ENLACE', 'descargar', 'eliminar'];
   dataSource!: MatTableDataSource<DataTable>;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor () 
+  constructor (private _getListService: getListService ) 
   {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
   }
+  
+  ngOnInit() {
+    this._getListService.ListDataSubject$.subscribe((data: any) => {
+      console.log( data )
+      this.dataList = data;
+      this.dataSource = new MatTableDataSource(this.dataList);
+    })
 
-
+    this._getListService.refreshListImage();
+  }
   
   onDownload() { // Habilita la descarga de la imagen
 

@@ -13,6 +13,7 @@ import { VentanaPrincipalComponent } from './components/ventana-principal/ventan
 import { ListaImagenesComponent } from './components/lista-imagenes/lista-imagenes.component';
 import { ModalAgregarComponent } from './components/modal-agregar/modal-agregar.component';
 import { ModalEliminarComponent } from './components/modal-eliminar/modal-eliminar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ModalEliminarComponent } from './components/modal-eliminar/modal-elimin
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

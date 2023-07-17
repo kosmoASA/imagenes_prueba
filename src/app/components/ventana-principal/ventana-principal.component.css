@@ -19,3 +19,7 @@
     display: grid;
     place-content: center;
 }
+
+button {
+    font-size: 16px;
+}

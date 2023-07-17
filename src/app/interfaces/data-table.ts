@@ -1,4 +1,9 @@
 export interface DataTable {
-    fecha: string;
-    descripcion: string;
+    ENLACE: string;
+    FECHA: Date;
+}
+
+
+export interface UploadImage {
+    ENLACE: string;
 }

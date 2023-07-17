@@ -1,1 +1,30 @@
-<p>modal-agregar works!</p>
+<h1 mat-dialog-title>Agregar una Imagen</h1>
+
+<form [formGroup]="form" (ngSubmit)="agregarImagen()" >
+
+    <mat-dialog-content>
+
+        <div class="file-select" id="src-file1" >
+            <input type="file" name="src-file1" aria-label="Archivo">
+        </div>
+
+        <br>
+
+        <mat-form-field class="example-full-width<">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="fecha" [max]="maxDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1 color="accent"></mat-datepicker>
+        </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button type="button" mat-button mat-dialog-close mat-button color="accent">Cancelar</button>
+        <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial
+        >Agregar</button>
+    </mat-dialog-actions>
+
+    <!-- Pendiente agregar mensaje de error cuando los campos no están completos  -->
+
+</form>
