@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DataTable, UploadImage } from '../interfaces/data-table';
+import { DataTable } from '../interfaces/data-table';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,20 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getFileList(): Observable<any>{
-    return this.http.get<any>(`${this.baseURL}/files/getFileList`);
+    return this.http.get<any>(`${this.baseURL}/getImageList`);
   }
 
   newFile(data: any): Observable<any> {
-    return this.http.post<DataTable[]>(`${this.baseURL}/files/newFile`, data);
+    return this.http.post<DataTable[]>(`${this.baseURL}/newImage`, data);
+  }
+
+  deleteImage(dataID: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseURL}/deleteImage`, { body: {ID_IMAGEN: dataID}});
+  }
+
+  downloadImage(enlace: string): Observable<any> {
+    const imageURL = `${this.baseURL}/images/${ enlace }`
+    return this.http.get(imageURL, {responseType: 'blob'})
   }
 
 }

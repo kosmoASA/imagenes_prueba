@@ -8,7 +8,7 @@
         <!-- Fecha Column -->
         <ng-container matColumnDef="FECHA">
           <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.FECHA}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.FECHA | date: 'mediumDate'}} </td>
         </ng-container>
       
         <!-- Descripcion Column -->
@@ -16,18 +16,23 @@
           <th mat-header-cell *matHeaderCellDef> Descripción </th>
           <td mat-cell *matCellDef="let element"> {{element.ENLACE}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="ID_IMAGEN">
+          <th mat-header-cell *matHeaderCellDef> ID Imagen </th>
+          <td mat-cell *matCellDef="let element"> {{element.ID_IMAGEN}} </td>
+        </ng-container>
       
         <ng-container matColumnDef="descargar">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-              <mat-icon class="btn_download" (click)="onDownload()" matTooltip="Descargar">download</mat-icon>
+              <mat-icon class="btn_download" (click)="onDownload(element.ENLACE)" matTooltip="Descargar">download</mat-icon>
             </td>
         </ng-container>   
         
         <ng-container matColumnDef="eliminar">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-              <mat-icon class="btn_delete" (click)="onDelete()" matTooltip="Eliminar">delete</mat-icon>
+              <mat-icon class="btn_delete" (click)="onDelete(element.ID_IMAGEN)" matTooltip="Eliminar">delete</mat-icon>
             </td>
         </ng-container>   
       

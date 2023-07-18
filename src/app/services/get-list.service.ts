@@ -21,7 +21,6 @@ export class getListService {
   refreshListImage() {
     this._apiService.getFileList().subscribe({
       next: (resp: any) => {
-
         this.ListDataSubject.next(resp.data)
       },
       error: (error: any ) => {
@@ -40,7 +39,7 @@ export class getListService {
   }
 
   mensajeError(error: any ) {
-    this._snackBar.open(`Error: ${ error.message }`, 'Oppps!!!', {
+    this._snackBar.open(`ERROR: ${ error.message }`, 'Oppps!!!', {
       duration: 4000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom'

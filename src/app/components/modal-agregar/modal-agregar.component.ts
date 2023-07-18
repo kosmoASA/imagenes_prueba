@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { lastValueFrom } from 'rxjs';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/services/api.service';
 import { getListService } from 'src/app/services/get-list.service';
@@ -43,22 +44,22 @@ export class ModalAgregarComponent {
       return;
     }
     
-
     const data = this.form.value;
     const formData = new FormData();
     formData.append('ARCHIVO', data.imagen);
-    formData.append('ENLACE', data.imagen.name)
 
+    this.dialogRef.close(formData);
 
-    this._apiService.newFile(formData).subscribe({
-      next: (resp: any) => {
-        this.dialogRef.close();
-        this._getListService.mensajeExito(resp);
-      },
-      error: (error: any) => {
-        this._getListService.mensajeError(error);
-      }
-    })
+    // this._apiService.newFile(formData).subscribe({
+    //   next: (resp: any) => {
+    //     this._getListService.mensajeExito(resp);
+        
+    //   },
+    //   error: (error: any) => {
+    //     console.log( error )
+    //     this._getListService.mensajeError(error);
+    //   }
+    // })
 
   }
 

@@ -14,7 +14,7 @@
         <br>
 
         <mat-form-field class="example-full-width<">
-            <mat-label>Fecha de Nacimiento</mat-label>
+            <mat-label>Fecha de Registro</mat-label>
             <input matInput [matDatepicker]="picker1" formControlName="fecha" [max]="maxDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1 color="accent"></mat-datepicker>
@@ -22,7 +22,7 @@
 
     </mat-dialog-content>
 
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions>
         <button type="button" mat-button mat-dialog-close mat-button color="accent">Cancelar</button>
         <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial
         >Agregar</button>

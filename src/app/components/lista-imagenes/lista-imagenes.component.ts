@@ -6,7 +6,9 @@ import { DataTable } from 'src/app/interfaces/data-table';
 import { getListService } from 'src/app/services/get-list.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalEliminarComponent } from '../modal-eliminar/modal-eliminar.component';
-
+import { ApiService } from 'src/app/services/api.service';
+import { tap } from 'rxjs/operators';
+import { saveAs } from 'file-saver'
 
 
 @Component({
@@ -21,7 +23,7 @@ export class ListaImagenesComponent {
   //* Variables
   dataList: DataTable[] = [];
   
-  displayedColumns: string[] = ['FECHA', 'ENLACE', 'descargar', 'eliminar'];
+  displayedColumns: string[] = ['FECHA', 'ENLACE', 'ID_IMAGEN', 'descargar', 'eliminar'];
   dataSource!: MatTableDataSource<DataTable>;
 
 
@@ -29,6 +31,7 @@ export class ListaImagenesComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor (private _getListService: getListService,
+              private _apiService: ApiService,
               public dialog: MatDialog, ) 
   {
 
@@ -45,18 +48,36 @@ export class ListaImagenesComponent {
     this._getListService.refreshListImage();
   }
   
-  onDownload() { // Habilita la descarga de la imagen
-
+  onDownload( enlace: string ) { // Habilita la descarga de la imagen
+    this._apiService.downloadImage( enlace )
+      .pipe(tap(console.log))
+      .subscribe((resp: any) => {
+        const fileName = enlace.toString();
+          saveAs(resp, fileName)
+      })
   }
 
-  onDelete() { // Abre el modal de eliminar, para realizar la acción
+
+  onDelete(ID_IMAGE: string) { // Abre el modal de eliminar, para realizar la acción
 
     const dialogRef = this.dialog.open(ModalEliminarComponent, {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe(data => {
-      this._getListService.refreshListImage();
+    dialogRef.beforeClosed().subscribe(dialogStatus => {
+      
+      if(dialogStatus !== true) return;
+
+      this._apiService.deleteImage(ID_IMAGE).subscribe({
+        next: (resp:any) => {
+          console.log( resp )
+          this._getListService.mensajeExito(resp);
+          this._getListService.refreshListImage();
+        },
+        error: (error: any) => {
+          console.log( error )
+        }
+      })
     });
 
   }
