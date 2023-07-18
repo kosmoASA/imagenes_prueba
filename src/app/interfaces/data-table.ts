@@ -4,6 +4,3 @@ export interface DataTable {
 }
 
 
-export interface UploadImage {
-    ENLACE: string;
-}

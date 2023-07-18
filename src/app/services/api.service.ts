@@ -13,11 +13,11 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getFileList(): Observable<any>{
-    return this.http.get<any>(`${this.baseURL}/file/getFileList`);
+    return this.http.get<any>(`${this.baseURL}/files/getFileList`);
   }
 
-  newFile(data: UploadImage): Observable<any> {
-    return this.http.post<DataTable[]>(`${this.baseURL}/file/newFile`, data);
+  newFile(data: any): Observable<any> {
+    return this.http.post<DataTable[]>(`${this.baseURL}/files/newFile`, data);
   }
 
 }

@@ -28,7 +28,6 @@ export class VentanaPrincipalComponent {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log( data );
       this._getListService.refreshListImage();
     });
     

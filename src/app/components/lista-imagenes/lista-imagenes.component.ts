@@ -4,12 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DataTable } from 'src/app/interfaces/data-table';
 import { getListService } from 'src/app/services/get-list.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalEliminarComponent } from '../modal-eliminar/modal-eliminar.component';
 
 
-
-const ELEMENT_DATA: DataTable[] = [
-  {FECHA: new Date(), ENLACE: 'Hydrogen_image.png'}
-];
 
 @Component({
   selector: 'app-lista-imagenes',
@@ -30,15 +28,18 @@ export class ListaImagenesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor (private _getListService: getListService ) 
+  constructor (private _getListService: getListService,
+              public dialog: MatDialog, ) 
   {
+
   }
   
   ngOnInit() {
     this._getListService.ListDataSubject$.subscribe((data: any) => {
-      console.log( data )
       this.dataList = data;
       this.dataSource = new MatTableDataSource(this.dataList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
 
     this._getListService.refreshListImage();
@@ -49,6 +50,14 @@ export class ListaImagenesComponent {
   }
 
   onDelete() { // Abre el modal de eliminar, para realizar la acción
+
+    const dialogRef = this.dialog.open(ModalEliminarComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      this._getListService.refreshListImage();
+    });
 
   }
 

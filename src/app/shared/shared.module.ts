@@ -16,6 +16,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -33,7 +35,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDropzoneModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -48,7 +52,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDropzoneModule,
+    MatSnackBarModule
   ]
 })
 export class SharedModule { }

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UploadImage } from 'src/app/interfaces/data-table';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/services/api.service';
 import { getListService } from 'src/app/services/get-list.service';
+
 
 @Component({
   selector: 'app-modal-agregar',
@@ -17,15 +18,17 @@ export class ModalAgregarComponent {
   
   form: FormGroup;
   maxDate: Date;
+  files: File[] = [];
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<ModalAgregarComponent>,
+              private _apiService: ApiService,
               private _getListService: getListService,
-              private _apiService: ApiService
+              // private _snackBar: MatSnackBar
               )
   {
     this.form = this.fb.group({
-      imagen : ['', [Validators.required]],
+      imagen : [null, [Validators.required]],
       fecha: ['', [Validators.required]],
     });
 
@@ -35,24 +38,41 @@ export class ModalAgregarComponent {
 
 
   agregarImagen() {
+
     if(this.form.invalid) {
       return;
     }
+    
 
-    const dataImage: UploadImage = {
-       ENLACE: this.form.value.ENLACE,
-    }
+    const data = this.form.value;
+    const formData = new FormData();
+    formData.append('ARCHIVO', data.imagen);
+    formData.append('ENLACE', data.imagen.name)
 
-    this._apiService.newFile(dataImage).subscribe({
+
+    this._apiService.newFile(formData).subscribe({
       next: (resp: any) => {
-        console.log( resp );
         this.dialogRef.close();
+        this._getListService.mensajeExito(resp);
       },
       error: (error: any) => {
-        console.log( error )
+        this._getListService.mensajeError(error);
       }
     })
 
   }
+
+  onSelect(event: any) {
+    // console.log(event);
+    this.form.patchValue({imagen: event.addedFiles[0]})
+    this.files.push(...event.addedFiles);
+  }
+  
+  onRemove(event: any) {
+    // console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  
 
 }
